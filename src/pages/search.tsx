@@ -1,32 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Button,
-  ButtonGroup,
-  Card,
-  CardBody,
-  CardFooter,
   Container,
-  Divider,
   Flex,
-  Heading,
-  Icon,
-  IconButton,
-  Image,
   Input,
   InputGroup,
   InputLeftElement,
-  SimpleGrid,
-  Stack,
   Text,
 } from "@chakra-ui/react";
 
 import { SearchIcon } from "@chakra-ui/icons";
 
-import {
-  BsBookmarkDash,
-  BsBookmarkPlus,
-} from "react-icons/bs";
 import MovieGrid from "./movieGrid";
 
 type Movie = {
@@ -65,6 +50,7 @@ export default function Search({
         if (data.error) {
           setError(new Error(data.error));
         } else {
+          setError(null);
           setMovies(data);
         }
       })
