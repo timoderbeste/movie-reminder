@@ -13,6 +13,7 @@ import {
   SimpleGrid,
   Stack,
   Text,
+  Tooltip,
 } from "@chakra-ui/react";
 import {
   BsBookmarkDash,
@@ -95,7 +96,14 @@ function MovieCard({
             height={250}
           />
           <Stack mt={4}>
-            <Heading size={"md"}>{movie.title}</Heading>
+            <Tooltip label={movie.title}>
+              <Heading
+                size={"md"}
+                noOfLines={2}
+              >
+                {movie.title}
+              </Heading>
+            </Tooltip>
             <Text>{movie.year}</Text>
           </Stack>
         </Box>
