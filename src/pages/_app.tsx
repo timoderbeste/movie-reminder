@@ -1,7 +1,8 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { AppProps } from "next/app";
 import Link from "next/link";
-import { Container, Flex, Heading, Spacer, Stack, VStack } from "@chakra-ui/react";
+import { Container, Flex, Heading, Spacer, Stack } from "@chakra-ui/react";
+import Search from "./search";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -9,26 +10,12 @@ export default function App({ Component, pageProps }: AppProps) {
       <Container maxW={"container.xl"} py={10}>
         <Flex alignItems={"center"}>
           <Link href="/">
-            <Heading size={"sm"} cursor={"pointer"}>
+            <Heading size={"xl"} cursor={"pointer"}>
               Movie Reminder
             </Heading>
           </Link>
-          <Spacer />
-          <Stack spacing={4} direction={"row"}>
-            <Link href="/search">
-              <Heading size={"sm"} cursor={"pointer"}>
-                Search
-              </Heading>
-            </Link>
-            <Spacer />
-            <Link href="/bookmarks">
-              <Heading size={"sm"} cursor={"pointer"}>
-                Bookmarks
-              </Heading>
-            </Link>
-          </Stack>
         </Flex>
-        <Component {...pageProps} />
+        {Component === Search && <Search />}
       </Container>
     </ChakraProvider>
   );

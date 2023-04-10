@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
+  Button,
   Container,
   Heading,
   Input,
@@ -11,22 +12,45 @@ import {
 } from "@chakra-ui/react";
 
 import { SearchIcon } from "@chakra-ui/icons";
-import useSWR from "swr";
 
 type Movie = {
-  imdbID: string;
-  Title: string;
-  Year: string;
-  Poster: string;
+  Title: string,
+  Year: string,
+  Poster: string,
+  imdbID: string,
+  Type: string,
 };
 
-export default function SearchPage() {
+export default function Search() {
   const [searchText, setSearchText] = useState("");
-  const { data, error } = useSWR<Movie[]>(searchText ? `/api/movies?title=${searchText}` : null);
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
 
+  function handleSearch() {
+    if (searchText.length === 0) {
+      return;
+    }
+    setIsLoading(true);
+    fetch(`/api/movies?title=${searchText}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          setError(new Error(data.error));
+        }
+        else {
+          setMovies(data);
+        }
+      })
+      .catch((err) => {
+        setError(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
   return (
     <Container maxW={"container.xl"} py={10}>
-      <Heading mb={4}>Search Movies</Heading>
       <InputGroup mb={4}>
         <InputLeftElement pointerEvents="none">
           <SearchIcon color="gray.300" />
@@ -38,11 +62,12 @@ export default function SearchPage() {
           onChange={(e) => setSearchText(e.target.value)}
         />
       </InputGroup>
+      <Button onClick={handleSearch}>Search</Button>
       {error && <Text color={"red"}>{error.message}</Text>}
       {
-        data && (
+        movies && (
           <List>
-            {data.map((movie) => (
+            {movies.map((movie) => (
               <ListItem key={movie.imdbID}>
                 <Text>{movie.Title} ({movie.Year})</Text>
               </ListItem>
