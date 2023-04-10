@@ -34,6 +34,7 @@ type MovieGridProps = {
   setWatchedMovies?: React.Dispatch<
     React.SetStateAction<Movie[]>
   >;
+  onSetBookmarkedMovies?: Function;
 };
 
 export default function MovieGrid({
@@ -43,6 +44,7 @@ export default function MovieGrid({
   forBookmarks = false,
   watchedMovies,
   setWatchedMovies,
+  onSetBookmarkedMovies,
 }: MovieGridProps) {
   return (
     <SimpleGrid
@@ -60,6 +62,7 @@ export default function MovieGrid({
             forBookmarks={forBookmarks}
             watchedMovies={watchedMovies}
             setWatchedMovies={setWatchedMovies}
+            onSetBookmarkedMovies={onSetBookmarkedMovies}
           />
         </Box>
       ))}
@@ -78,6 +81,7 @@ type MovieCardProps = {
   setWatchedMovies?: React.Dispatch<
     React.SetStateAction<Movie[]>
   >;
+  onSetBookmarkedMovies?: Function;
 };
 
 function MovieCard({
@@ -87,6 +91,7 @@ function MovieCard({
   forBookmarks = false,
   watchedMovies,
   setWatchedMovies,
+  onSetBookmarkedMovies,
 }: MovieCardProps): JSX.Element {
   return (
     <Card maxW={"sm"}>
@@ -132,6 +137,9 @@ function MovieCard({
                   "bookmarkedMovies",
                   JSON.stringify(filteredMovies)
                 );
+                if (onSetBookmarkedMovies) {
+                  onSetBookmarkedMovies();
+                }
               }}
             />
           ) : (
@@ -149,6 +157,9 @@ function MovieCard({
                   "bookmarkedMovies",
                   JSON.stringify(newBookmarkedMovies)
                 );
+                if (onSetBookmarkedMovies) {
+                  onSetBookmarkedMovies();
+                }
               }}
             />
           )}

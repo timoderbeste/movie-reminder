@@ -1,4 +1,6 @@
 import {
+  Alert,
+  AlertIcon,
   Container,
   Tab,
   TabList,
@@ -76,60 +78,68 @@ export default function Bookmarks({
       maxW={"container.xl"}
       py={10}
     >
-      <Tabs
-        index={tabIndex}
-        onChange={handleTabChange}
-      >
-        <TabList>
-          <Tab>All</Tab>
-          <Tab>Unwatched</Tab>
-          <Tab>Watched</Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel>
-            {isPending ? (
-              <p>Loading...</p>
-            ) : (
-              <MovieGrid
-                movies={movies}
-                bookmarkedMovies={bookmarkedMovies}
-                setBookmarkedMovies={setBookmarkedMovies}
-                forBookmarks={true}
-                watchedMovies={watchedMovies}
-                setWatchedMovies={setWatchedMovies}
-              />
-            )}
-          </TabPanel>
-          <TabPanel>
-            {isPending ? (
-              <p>Loading...</p>
-            ) : (
-              <MovieGrid
-                movies={movies}
-                bookmarkedMovies={bookmarkedMovies}
-                setBookmarkedMovies={setBookmarkedMovies}
-                forBookmarks={true}
-                watchedMovies={watchedMovies}
-                setWatchedMovies={setWatchedMovies}
-              />
-            )}
-          </TabPanel>
-          <TabPanel>
-            {isPending ? (
-              <p>Loading...</p>
-            ) : (
-              <MovieGrid
-                movies={movies}
-                bookmarkedMovies={bookmarkedMovies}
-                setBookmarkedMovies={setBookmarkedMovies}
-                forBookmarks={true}
-                watchedMovies={watchedMovies}
-                setWatchedMovies={setWatchedMovies}
-              />
-            )}
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+      {movies.length === 0 ? (
+        <Alert>
+          <AlertIcon />
+          No movies bookmarked. Try searching for a movie
+          and then bookmarking it.
+        </Alert>
+      ) : (
+        <Tabs
+          index={tabIndex}
+          onChange={handleTabChange}
+        >
+          <TabList>
+            <Tab>All</Tab>
+            <Tab>Unwatched</Tab>
+            <Tab>Watched</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              {isPending ? (
+                <p>Loading...</p>
+              ) : (
+                <MovieGrid
+                  movies={movies}
+                  bookmarkedMovies={bookmarkedMovies}
+                  setBookmarkedMovies={setBookmarkedMovies}
+                  forBookmarks={true}
+                  watchedMovies={watchedMovies}
+                  setWatchedMovies={setWatchedMovies}
+                />
+              )}
+            </TabPanel>
+            <TabPanel>
+              {isPending ? (
+                <p>Loading...</p>
+              ) : (
+                <MovieGrid
+                  movies={movies}
+                  bookmarkedMovies={bookmarkedMovies}
+                  setBookmarkedMovies={setBookmarkedMovies}
+                  forBookmarks={true}
+                  watchedMovies={watchedMovies}
+                  setWatchedMovies={setWatchedMovies}
+                />
+              )}
+            </TabPanel>
+            <TabPanel>
+              {isPending ? (
+                <p>Loading...</p>
+              ) : (
+                <MovieGrid
+                  movies={movies}
+                  bookmarkedMovies={bookmarkedMovies}
+                  setBookmarkedMovies={setBookmarkedMovies}
+                  forBookmarks={true}
+                  watchedMovies={watchedMovies}
+                  setWatchedMovies={setWatchedMovies}
+                />
+              )}
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      )}
     </Container>
   );
 }

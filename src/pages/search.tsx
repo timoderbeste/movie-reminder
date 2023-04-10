@@ -101,6 +101,10 @@ export default function Search({
             movies={movies}
             bookmarkedMovies={bookmarkedMovies}
             setBookmarkedMovies={setBookmarkedMovies}
+            onSetBookmarkedMovies={() => {
+              setMovies([]);
+              setSearchText("");
+            }}
           />
         )}
       </Box>
