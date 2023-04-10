@@ -16,8 +16,6 @@ export default async function handler(
       },
     }
   );
-  console.log("response", response);
-
   const data = await response.json();
   if (data.Response === "False") {
     res.status(404).json({ error: data.Error });

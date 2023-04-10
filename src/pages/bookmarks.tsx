@@ -17,11 +17,17 @@ type BookmarksProps = {
   setBookmarkedMovies: React.Dispatch<
     React.SetStateAction<Movie[]>
   >;
+  bookmarkGroups: string[];
+  setBookmarkGroups: React.Dispatch<
+    React.SetStateAction<string[]>
+  >;
 };
 
 export default function Bookmarks({
   bookmarkedMovies,
   setBookmarkedMovies,
+  bookmarkGroups,
+  setBookmarkGroups,
 }: BookmarksProps): JSX.Element {
   const [movies, setMovies] = useState<Movie[]>(
     bookmarkedMovies
@@ -50,6 +56,15 @@ export default function Bookmarks({
             )
           );
           break;
+        default:
+          const bookmarkGroup = bookmarkGroups[index - 3];
+          setMovies(
+            bookmarkedMovies.filter(
+              (movie) =>
+                movie.bookmarkGroup === bookmarkGroup
+            )
+          );
+          break;
       }
     });
   }
@@ -59,9 +74,6 @@ export default function Bookmarks({
       setMovies(bookmarkedMovies);
     });
   }, [bookmarkedMovies]);
-
-  console.log("movies", movies);
-  console.log("bookmarkedMovies", bookmarkedMovies);
 
   return (
     <Container maxW={"container.xl"}>
@@ -82,6 +94,9 @@ export default function Bookmarks({
             <Tab>All</Tab>
             <Tab>Unwatched</Tab>
             <Tab>Watched</Tab>
+            {bookmarkGroups.map((group) => (
+              <Tab>{group}</Tab>
+            ))}
           </TabList>
           <TabPanels>
             <TabPanel>
@@ -120,6 +135,22 @@ export default function Bookmarks({
                 />
               )}
             </TabPanel>
+            {bookmarkGroups.map((group) => (
+              <TabPanel>
+                {isPending ? (
+                  <p>Loading...</p>
+                ) : (
+                  <MovieGrid
+                    movies={movies}
+                    bookmarkedMovies={bookmarkedMovies}
+                    setBookmarkedMovies={
+                      setBookmarkedMovies
+                    }
+                    forBookmarks={true}
+                  />
+                )}
+              </TabPanel>
+            ))}
           </TabPanels>
         </Tabs>
       )}

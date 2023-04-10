@@ -5,4 +5,5 @@ export type Movie = {
   imdbID: string;
   type: string;
   watched: boolean;
+  bookmarkGroup: string;
 };

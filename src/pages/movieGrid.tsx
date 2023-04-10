@@ -14,6 +14,7 @@ import {
   Stack,
   Text,
   Tooltip,
+  useDisclosure,
 } from "@chakra-ui/react";
 import {
   BsBookmarkDash,
@@ -23,6 +24,8 @@ import {
   ImCheckboxChecked,
   ImCheckboxUnchecked,
 } from "react-icons/im";
+import BookmarkCreationModal from "./bookmarkCreation";
+import { useState } from "react";
 
 type MovieGridProps = {
   movies: Movie[];
@@ -32,6 +35,10 @@ type MovieGridProps = {
   >;
   forBookmarks?: boolean;
   onSetBookmarkedMovies?: Function;
+  bookmarkGroups?: string[];
+  setBookmarkGroups?: React.Dispatch<
+    React.SetStateAction<string[]>
+  >;
 };
 
 export default function MovieGrid({
@@ -40,6 +47,8 @@ export default function MovieGrid({
   setBookmarkedMovies,
   forBookmarks = false,
   onSetBookmarkedMovies,
+  bookmarkGroups,
+  setBookmarkGroups,
 }: MovieGridProps) {
   return (
     <SimpleGrid
@@ -56,6 +65,8 @@ export default function MovieGrid({
             setBookmarkedMovies={setBookmarkedMovies}
             forBookmarks={forBookmarks}
             onSetBookmarkedMovies={onSetBookmarkedMovies}
+            bookmarkGroups={bookmarkGroups}
+            setBookmarkGroups={setBookmarkGroups}
           />
         </Box>
       ))}
@@ -71,6 +82,10 @@ type MovieCardProps = {
   >;
   forBookmarks: boolean;
   onSetBookmarkedMovies?: Function;
+  bookmarkGroups?: string[];
+  setBookmarkGroups?: React.Dispatch<
+    React.SetStateAction<string[]>
+  >;
 };
 
 function MovieCard({
@@ -79,126 +94,132 @@ function MovieCard({
   setBookmarkedMovies,
   forBookmarks = false,
   onSetBookmarkedMovies,
+  bookmarkGroups,
+  setBookmarkGroups,
 }: MovieCardProps): JSX.Element {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  console.log("bookmarkgroups", bookmarkGroups);
   return (
-    <Card maxW={"sm"}>
-      <CardBody>
-        <Box
-          display={"flex"}
-          height={350}
-          flexDirection={"column"}
-          justifyContent={"space-between"}
-          alignContent={"center"}
-        >
-          <Image
-            src={movie.poster}
-            alt={movie.title}
-            height={250}
-          />
-          <Stack mt={4}>
-            <Tooltip label={movie.title}>
-              <Heading
-                size={"md"}
-                noOfLines={2}
-              >
-                {movie.title}
-              </Heading>
-            </Tooltip>
-            <Text>{movie.year}</Text>
-          </Stack>
-        </Box>
-      </CardBody>
-      <Divider />
-      <CardFooter>
-        <Flex
-          justifyContent={"space-between"}
-          width={"100%"}
-        >
-          {bookmarkedMovies.some(
-            (m) => m.imdbID === movie.imdbID
-          ) ? (
-            <IconButton
-              colorScheme="red"
-              aria-label="Remove from bookmarks"
-              icon={<Icon as={BsBookmarkDash} />}
-              onClick={() => {
-                const filteredMovies =
-                  bookmarkedMovies.filter(
-                    (m) => m.imdbID !== movie.imdbID
-                  );
-                setBookmarkedMovies(filteredMovies);
-                localStorage.setItem(
-                  "bookmarkedMovies",
-                  JSON.stringify(filteredMovies)
-                );
-                if (onSetBookmarkedMovies) {
-                  onSetBookmarkedMovies();
-                }
-              }}
+    <>
+      <Card maxW={"sm"}>
+        <CardBody>
+          <Box
+            display={"flex"}
+            height={350}
+            flexDirection={"column"}
+            justifyContent={"space-between"}
+            alignContent={"center"}
+          >
+            <Image
+              src={movie.poster}
+              alt={movie.title}
+              height={250}
             />
-          ) : (
-            <IconButton
-              colorScheme="blue"
-              aria-label="Add to bookmarks"
-              icon={<Icon as={BsBookmarkPlus} />}
-              onClick={() => {
-                const newBookmarkedMovies = [
-                  ...bookmarkedMovies,
-                  movie,
-                ];
-                setBookmarkedMovies(newBookmarkedMovies);
-                localStorage.setItem(
-                  "bookmarkedMovies",
-                  JSON.stringify(newBookmarkedMovies)
-                );
-                if (onSetBookmarkedMovies) {
-                  onSetBookmarkedMovies();
-                }
-              }}
-            />
-          )}
-          {forBookmarks &&
-            (movie.watched ? (
+            <Stack mt={4}>
+              <Tooltip label={movie.title}>
+                <Heading
+                  size={"md"}
+                  noOfLines={2}
+                >
+                  {movie.title}
+                </Heading>
+              </Tooltip>
+              <Text>{movie.year}</Text>
+            </Stack>
+          </Box>
+        </CardBody>
+        <Divider />
+        <CardFooter>
+          <Flex
+            justifyContent={"space-between"}
+            width={"100%"}
+          >
+            {bookmarkedMovies.some(
+              (m) => m.imdbID === movie.imdbID
+            ) ? (
               <IconButton
-                colorScheme="green"
-                aria-label="Mark as unwatched"
-                icon={<Icon as={ImCheckboxChecked} />}
+                colorScheme="red"
+                aria-label="Remove from bookmarks"
+                icon={<Icon as={BsBookmarkDash} />}
                 onClick={() => {
-                  const updatedMovies =
-                    bookmarkedMovies.map((m) =>
-                      m.imdbID === movie.imdbID
-                        ? { ...m, watched: false }
-                        : m
+                  const filteredMovies =
+                    bookmarkedMovies.filter(
+                      (m) => m.imdbID !== movie.imdbID
                     );
-                  setBookmarkedMovies(updatedMovies);
+                  setBookmarkedMovies(filteredMovies);
                   localStorage.setItem(
                     "bookmarkedMovies",
-                    JSON.stringify(updatedMovies)
+                    JSON.stringify(filteredMovies)
                   );
                 }}
               />
             ) : (
               <IconButton
-                colorScheme="green"
-                aria-label="Mark as watched"
-                icon={<Icon as={ImCheckboxUnchecked} />}
+                colorScheme="blue"
+                aria-label="Add to bookmarks"
+                icon={<Icon as={BsBookmarkPlus} />}
                 onClick={() => {
-                  const updatedMovies =
-                    bookmarkedMovies.map((m) =>
-                      m.imdbID === movie.imdbID
-                        ? { ...m, watched: true }
-                        : m
-                    );
-                  setBookmarkedMovies(updatedMovies);
-                  localStorage.setItem(
-                    "bookmarkedMovies",
-                    JSON.stringify(updatedMovies)
-                  );
+                  onOpen();
                 }}
               />
-            ))}
-        </Flex>
-      </CardFooter>
-    </Card>
+            )}
+            {forBookmarks &&
+              (movie.watched ? (
+                <IconButton
+                  colorScheme="green"
+                  aria-label="Mark as unwatched"
+                  icon={<Icon as={ImCheckboxChecked} />}
+                  onClick={() => {
+                    const updatedMovies =
+                      bookmarkedMovies.map((m) =>
+                        m.imdbID === movie.imdbID
+                          ? { ...m, watched: false }
+                          : m
+                      );
+                    setBookmarkedMovies(updatedMovies);
+                    localStorage.setItem(
+                      "bookmarkedMovies",
+                      JSON.stringify(updatedMovies)
+                    );
+                  }}
+                />
+              ) : (
+                <IconButton
+                  colorScheme="green"
+                  aria-label="Mark as watched"
+                  icon={<Icon as={ImCheckboxUnchecked} />}
+                  onClick={() => {
+                    const updatedMovies =
+                      bookmarkedMovies.map((m) =>
+                        m.imdbID === movie.imdbID
+                          ? { ...m, watched: true }
+                          : m
+                      );
+                    setBookmarkedMovies(updatedMovies);
+                    localStorage.setItem(
+                      "bookmarkedMovies",
+                      JSON.stringify(updatedMovies)
+                    );
+                  }}
+                />
+              ))}
+          </Flex>
+        </CardFooter>
+      </Card>
+      {bookmarkGroups !== null &&
+        setBookmarkGroups &&
+        onSetBookmarkedMovies && (
+          <BookmarkCreationModal
+            isOpen={isOpen}
+            onClose={onClose}
+            movie={movie}
+            bookmarkedMovies={bookmarkedMovies}
+            setBookmarkedMovies={setBookmarkedMovies}
+            onSetBookmarkedMovies={onSetBookmarkedMovies}
+            bookmarkGroups={bookmarkGroups ?? []}
+            setBookmarkGroups={setBookmarkGroups ?? null}
+          />
+        )}
+    </>
   );
 }

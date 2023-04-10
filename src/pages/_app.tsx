@@ -14,16 +14,30 @@ export default function App() {
   const [bookmarkedMovies, setBookmarkedMovies] = useState<
     Movie[]
   >([]);
+  const [bookmarkGroups, setBookmarkGroups] = useState<
+    string[]
+  >([]);
 
   useEffect(() => {
     if (typeof window === "undefined") {
       return;
     }
-    const localData = localStorage.getItem(
+    const bookmarkedMoviesString = localStorage.getItem(
       "bookmarkedMovies"
     );
     setBookmarkedMovies(
-      localData ? JSON.parse(localData) : []
+      bookmarkedMoviesString
+        ? JSON.parse(bookmarkedMoviesString)
+        : []
+    );
+
+    const bookmarkGroupsString = localStorage.getItem(
+      "bookmarkGroups"
+    );
+    setBookmarkGroups(
+      bookmarkGroupsString
+        ? JSON.parse(bookmarkGroupsString)
+        : []
     );
   }, []);
 
@@ -47,10 +61,14 @@ export default function App() {
         <Search
           bookmarkedMovies={bookmarkedMovies}
           setBookmarkedMovies={setBookmarkedMovies}
+          bookmarkGroups={bookmarkGroups}
+          setBookmarkGroups={setBookmarkGroups}
         />
         <Bookmarks
           bookmarkedMovies={bookmarkedMovies}
           setBookmarkedMovies={setBookmarkedMovies}
+          bookmarkGroups={bookmarkGroups}
+          setBookmarkGroups={setBookmarkGroups}
         />
       </Container>
     </ChakraProvider>

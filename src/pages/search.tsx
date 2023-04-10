@@ -21,11 +21,17 @@ type SearchProps = {
   setBookmarkedMovies: React.Dispatch<
     React.SetStateAction<Movie[]>
   >;
+  bookmarkGroups: string[];
+  setBookmarkGroups: React.Dispatch<
+    React.SetStateAction<string[]>
+  >;
 };
 
 export default function Search({
   bookmarkedMovies,
   setBookmarkedMovies,
+  bookmarkGroups,
+  setBookmarkGroups,
 }: SearchProps): JSX.Element {
   const [searchText, setSearchText] = useState("");
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -126,6 +132,8 @@ export default function Search({
                 setMovies([]);
                 setSearchText("");
               }}
+              bookmarkGroups={bookmarkGroups}
+              setBookmarkGroups={setBookmarkGroups}
             />
           )}
         </Card>
