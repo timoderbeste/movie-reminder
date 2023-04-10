@@ -22,17 +22,31 @@ import {
 
 import { SearchIcon } from "@chakra-ui/icons";
 
-import { BsBookmarkDash, BsBookmarkPlus } from "react-icons/bs";
+import {
+  BsBookmarkDash,
+  BsBookmarkPlus,
+} from "react-icons/bs";
+import MovieGrid from "./movieGrid";
 
 type Movie = {
-  Title: string,
-  Year: string,
-  Poster: string,
-  imdbID: string,
-  Type: string,
+  Title: string;
+  Year: string;
+  Poster: string;
+  imdbID: string;
+  Type: string;
 };
 
-export default function Search() {
+type SearchProps = {
+  bookmarkedMovies: Movie[];
+  setBookmarkedMovies: React.Dispatch<
+    React.SetStateAction<Movie[]>
+  >;
+};
+
+export default function Search({
+  bookmarkedMovies,
+  setBookmarkedMovies,
+}: SearchProps): JSX.Element {
   const [searchText, setSearchText] = useState("");
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -49,8 +63,7 @@ export default function Search() {
       .then((data) => {
         if (data.error) {
           setError(new Error(data.error));
-        }
-        else {
+        } else {
           setMovies(data);
         }
       })
@@ -62,7 +75,10 @@ export default function Search() {
       });
   }
   return (
-    <Container maxW={"container.xl"} py={10}>
+    <Container
+      maxW={"container.xl"}
+      py={10}
+    >
       <InputGroup mb={4}>
         <InputLeftElement pointerEvents="none">
           <SearchIcon color="gray.300" />
@@ -76,61 +92,14 @@ export default function Search() {
       </InputGroup>
       <Button onClick={handleSearch}>Search</Button>
       {error && <Text color={"red"}>{error.message}</Text>}
-      {
-        isLoading && (
-          <Text>Loading...</Text>
-        )
-      }
-      {
-        movies && (
-          <SimpleGrid 
-            spacing={4} 
-            templateColumns={"repeat(auto-fill, minmax(200px, 1fr))"}
-          >
-            {movies.map((movie) => (
-              <Box key={movie.imdbID}>
-                <Card maxW={"sm"}>
-                  <CardBody>
-                    <Box 
-                      display={"flex"} 
-                      height={350} 
-                      flexDirection={"column"} 
-                      justifyContent={"space-between"} 
-                      alignContent={"center"} 
-                      // alignItems={"center"}
-                    >
-                      <Image 
-                        src={movie.Poster} 
-                        alt={movie.Title}
-                        height={250}
-                      />
-                      <Stack mt={4}>
-                        <Heading size={"md"}>{movie.Title}</Heading>
-                        <Text>{movie.Year}</Text>
-                      </Stack>
-                    </Box>
-                  </CardBody>
-                  <Divider />
-                  <CardFooter>
-                    <ButtonGroup>
-                      <IconButton 
-                        colorScheme="blue"
-                        aria-label="Add to bookmarks"
-                        icon={<Icon as={BsBookmarkPlus} />} 
-                      />
-                      <IconButton 
-                        colorScheme="red"
-                        aria-label="Remove from bookmarks"
-                        icon={<Icon as={BsBookmarkDash}/>} 
-                      />
-                    </ButtonGroup>
-                  </CardFooter>
-                </Card>
-              </Box>
-            ))}
-          </SimpleGrid>
-        )
-      }
+      {isLoading && <Text>Loading...</Text>}
+      {movies && (
+        <MovieGrid
+          movies={movies}
+          bookmarkedMovies={bookmarkedMovies}
+          setBookmarkedMovies={setBookmarkedMovies}
+        />
+      )}
     </Container>
-  )
+  );
 }
