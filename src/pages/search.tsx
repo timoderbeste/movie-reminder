@@ -114,10 +114,10 @@ export default function Search({
           width={"100%"}
           height={500}
           overflow={"auto"}
-          variant={"outline"}
           px={5}
           py={5}
           mt={5}
+          variant={"filled"}
         >
           {error && (
             <Text color={"red"}>{error.message}</Text>

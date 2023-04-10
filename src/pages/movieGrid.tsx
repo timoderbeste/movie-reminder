@@ -100,7 +100,10 @@ function MovieCard({
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Card maxW={"sm"}>
+      <Card
+        maxW={"sm"}
+        variant={"outline"}
+      >
         <CardBody>
           <Box
             display={"flex"}
