@@ -42,7 +42,7 @@ export default function App() {
       <Container
         maxW={"container.xl"}
         py={10}
-        px={10}
+        px={5}
       >
         <Flex alignItems={"center"}>
           <Link href="/">

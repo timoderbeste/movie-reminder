@@ -1,6 +1,7 @@
 import {
   Alert,
   AlertIcon,
+  Box,
   Container,
   Tab,
   TabList,
@@ -90,7 +91,10 @@ export default function Bookmarks({
           index={tabIndex}
           onChange={handleTabChange}
         >
-          <TabList>
+          <TabList
+            overflowY={"hidden"}
+            overflowX={"auto"}
+          >
             <Tab>All</Tab>
             <Tab>Unwatched</Tab>
             <Tab>Watched</Tab>
