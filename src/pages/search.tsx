@@ -44,7 +44,16 @@ export default function Search({
           setError(new Error(data.error));
         } else {
           setError(null);
-          setMovies(data);
+          setMovies(
+            data.map((movie: any) => ({
+              imdbID: movie.imdbID,
+              title: movie.Title,
+              year: movie.Year,
+              poster: movie.Poster,
+              type: movie.Type,
+              watched: false,
+            }))
+          );
         }
       })
       .catch((err) => {

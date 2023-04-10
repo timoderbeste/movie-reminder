@@ -23,9 +23,6 @@ export default function Bookmarks({
   bookmarkedMovies,
   setBookmarkedMovies,
 }: BookmarksProps): JSX.Element {
-  const [watchedMovies, setWatchedMovies] = useState<
-    Movie[]
-  >([]);
   const [movies, setMovies] = useState<Movie[]>(
     bookmarkedMovies
   );
@@ -42,32 +39,25 @@ export default function Bookmarks({
         case 1:
           setMovies(
             bookmarkedMovies.filter(
-              (movie) =>
-                !watchedMovies
-                  .map((movie) => movie.imdbID)
-                  .includes(movie.imdbID)
+              (movie) => !movie.watched
             )
           );
           break;
         case 2:
-          setMovies(watchedMovies);
+          setMovies(
+            bookmarkedMovies.filter(
+              (movie) => movie.watched
+            )
+          );
           break;
       }
     });
   }
 
   useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-    const localData = localStorage.getItem("watchedMovies");
-    setWatchedMovies(
-      localData ? JSON.parse(localData) : []
-    );
-  }, []);
-
-  useEffect(() => {
-    setMovies(bookmarkedMovies);
+    startTransition(() => {
+      setMovies(bookmarkedMovies);
+    });
   }, [bookmarkedMovies]);
 
   console.log("movies", movies);
@@ -78,12 +68,14 @@ export default function Bookmarks({
       maxW={"container.xl"}
       py={10}
     >
-      {movies.length === 0 ? (
-        <Alert>
-          <AlertIcon />
-          No movies bookmarked. Try searching for a movie
-          and then bookmarking it.
-        </Alert>
+      {bookmarkedMovies.length === 0 ? (
+        isPending ? null : (
+          <Alert>
+            <AlertIcon />
+            No movies bookmarked. Try searching for a movie
+            and then bookmarking it.
+          </Alert>
+        )
       ) : (
         <Tabs
           index={tabIndex}
@@ -104,8 +96,6 @@ export default function Bookmarks({
                   bookmarkedMovies={bookmarkedMovies}
                   setBookmarkedMovies={setBookmarkedMovies}
                   forBookmarks={true}
-                  watchedMovies={watchedMovies}
-                  setWatchedMovies={setWatchedMovies}
                 />
               )}
             </TabPanel>
@@ -118,8 +108,6 @@ export default function Bookmarks({
                   bookmarkedMovies={bookmarkedMovies}
                   setBookmarkedMovies={setBookmarkedMovies}
                   forBookmarks={true}
-                  watchedMovies={watchedMovies}
-                  setWatchedMovies={setWatchedMovies}
                 />
               )}
             </TabPanel>
@@ -132,8 +120,6 @@ export default function Bookmarks({
                   bookmarkedMovies={bookmarkedMovies}
                   setBookmarkedMovies={setBookmarkedMovies}
                   forBookmarks={true}
-                  watchedMovies={watchedMovies}
-                  setWatchedMovies={setWatchedMovies}
                 />
               )}
             </TabPanel>

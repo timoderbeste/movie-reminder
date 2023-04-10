@@ -30,10 +30,6 @@ type MovieGridProps = {
     React.SetStateAction<Movie[]>
   >;
   forBookmarks?: boolean;
-  watchedMovies?: Movie[];
-  setWatchedMovies?: React.Dispatch<
-    React.SetStateAction<Movie[]>
-  >;
   onSetBookmarkedMovies?: Function;
 };
 
@@ -60,8 +56,6 @@ export default function MovieGrid({
             bookmarkedMovies={bookmarkedMovies}
             setBookmarkedMovies={setBookmarkedMovies}
             forBookmarks={forBookmarks}
-            watchedMovies={watchedMovies}
-            setWatchedMovies={setWatchedMovies}
             onSetBookmarkedMovies={onSetBookmarkedMovies}
           />
         </Box>
@@ -89,8 +83,6 @@ function MovieCard({
   bookmarkedMovies,
   setBookmarkedMovies,
   forBookmarks = false,
-  watchedMovies,
-  setWatchedMovies,
   onSetBookmarkedMovies,
 }: MovieCardProps): JSX.Element {
   return (
@@ -104,13 +96,13 @@ function MovieCard({
           alignContent={"center"}
         >
           <Image
-            src={movie.Poster}
-            alt={movie.Title}
+            src={movie.poster}
+            alt={movie.title}
             height={250}
           />
           <Stack mt={4}>
-            <Heading size={"md"}>{movie.Title}</Heading>
-            <Text>{movie.Year}</Text>
+            <Heading size={"md"}>{movie.title}</Heading>
+            <Text>{movie.year}</Text>
           </Stack>
         </Box>
       </CardBody>
@@ -164,23 +156,22 @@ function MovieCard({
             />
           )}
           {forBookmarks &&
-            (watchedMovies?.some(
-              (m: Movie) => m.imdbID === movie.imdbID
-            ) ?? false ? (
+            (movie.watched ? (
               <IconButton
                 colorScheme="green"
                 aria-label="Mark as unwatched"
                 icon={<Icon as={ImCheckboxChecked} />}
                 onClick={() => {
-                  const filteredMovies =
-                    watchedMovies?.filter(
-                      (m) => m.imdbID !== movie.imdbID
-                    ) ?? [];
-                  setWatchedMovies &&
-                    setWatchedMovies(filteredMovies);
+                  const updatedMovies =
+                    bookmarkedMovies.map((m) =>
+                      m.imdbID === movie.imdbID
+                        ? { ...m, watched: false }
+                        : m
+                    );
+                  setBookmarkedMovies(updatedMovies);
                   localStorage.setItem(
-                    "watchedMovies",
-                    JSON.stringify(filteredMovies)
+                    "bookmarkedMovies",
+                    JSON.stringify(updatedMovies)
                   );
                 }}
               />
@@ -190,15 +181,16 @@ function MovieCard({
                 aria-label="Mark as watched"
                 icon={<Icon as={ImCheckboxUnchecked} />}
                 onClick={() => {
-                  const newWatchedMovies = [
-                    ...(watchedMovies || []),
-                    movie,
-                  ];
-                  setWatchedMovies &&
-                    setWatchedMovies(newWatchedMovies);
+                  const updatedMovies =
+                    bookmarkedMovies.map((m) =>
+                      m.imdbID === movie.imdbID
+                        ? { ...m, watched: true }
+                        : m
+                    );
+                  setBookmarkedMovies(updatedMovies);
                   localStorage.setItem(
-                    "watchedMovies",
-                    JSON.stringify(newWatchedMovies)
+                    "bookmarkedMovies",
+                    JSON.stringify(updatedMovies)
                   );
                 }}
               />
