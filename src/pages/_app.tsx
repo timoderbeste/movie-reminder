@@ -1,8 +1,4 @@
-import {
-  ChakraProvider,
-  Spacer,
-  Stack,
-} from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import Link from "next/link";
 import { Container, Flex, Heading } from "@chakra-ui/react";
 import Search from "./search";

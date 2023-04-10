@@ -3,16 +3,15 @@ import {
   Button,
   FormControl,
   FormLabel,
-  Input,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Text,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useState } from "react";
+import Creatable from "react-select/creatable";
 
 type BookmarkCreationProps = {
   isOpen: boolean;
@@ -29,6 +28,11 @@ type BookmarkCreationProps = {
   >;
 };
 
+type OptionType = {
+  value: string;
+  label: string;
+};
+
 export default function BookmarkCreationModal({
   isOpen,
   onClose,
@@ -39,8 +43,15 @@ export default function BookmarkCreationModal({
   bookmarkGroups,
   setBookmarkGroups,
 }: BookmarkCreationProps): JSX.Element {
-  const inputRef = useRef<HTMLInputElement>(null);
   const [bookmarkGroup, setBookmarkGroup] = useState("All");
+
+  const options = bookmarkGroups.map((group) => {
+    return {
+      label: group,
+      value: group,
+    } as OptionType;
+  });
+
   return (
     <Modal
       closeOnOverlayClick={false}
@@ -50,16 +61,30 @@ export default function BookmarkCreationModal({
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
-          Add {"<<"} {movie.title} {">>"} to your bookmarks
+          Add <u>{movie.title}</u> to your bookmarks
         </ModalHeader>
         <ModalBody>
           <FormControl>
             <FormLabel>Bookmark Group</FormLabel>
-            <Input
-              ref={inputRef}
-              value={bookmarkGroup}
-              onChange={(e) => {
-                setBookmarkGroup(e.target.value);
+            <Creatable
+              options={options}
+              value={options.find(
+                (option) => option.value === bookmarkGroup
+              )}
+              onChange={(e) =>
+                setBookmarkGroup(e?.value as string)
+              }
+              onCreateOption={(inputValue) => {
+                const newBookmarkGroups = [
+                  ...bookmarkGroups,
+                  inputValue,
+                ];
+                setBookmarkGroup(inputValue);
+                setBookmarkGroups(newBookmarkGroups);
+                localStorage.setItem(
+                  "bookmarkGroups",
+                  JSON.stringify(newBookmarkGroups)
+                );
               }}
             />
           </FormControl>

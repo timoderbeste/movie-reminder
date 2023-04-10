@@ -95,7 +95,7 @@ export default function Bookmarks({
             <Tab>Unwatched</Tab>
             <Tab>Watched</Tab>
             {bookmarkGroups.map((group) => (
-              <Tab>{group}</Tab>
+              <Tab key={group}>{group}</Tab>
             ))}
           </TabList>
           <TabPanels>
@@ -136,7 +136,7 @@ export default function Bookmarks({
               )}
             </TabPanel>
             {bookmarkGroups.map((group) => (
-              <TabPanel>
+              <TabPanel key={group}>
                 {isPending ? (
                   <p>Loading...</p>
                 ) : (

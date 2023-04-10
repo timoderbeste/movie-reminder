@@ -4,7 +4,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log("req.query.title", req.query.title);
   const title = req.query.title as string;
   const response = await fetch(
     `https://movie-database-alternative.p.rapidapi.com/?s=${title}&page=1&r=json`,

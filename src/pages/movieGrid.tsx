@@ -25,7 +25,6 @@ import {
   ImCheckboxUnchecked,
 } from "react-icons/im";
 import BookmarkCreationModal from "./bookmarkCreation";
-import { useState } from "react";
 
 type MovieGridProps = {
   movies: Movie[];
@@ -98,7 +97,6 @@ function MovieCard({
   setBookmarkGroups,
 }: MovieCardProps): JSX.Element {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  console.log("bookmarkgroups", bookmarkGroups);
   return (
     <>
       <Card maxW={"sm"}>
