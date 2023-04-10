@@ -18,7 +18,6 @@ function handleTabChange(
   bookmarkedMovies: Movie[],
   bookmarkGroups: string[]
 ) {
-  console.log("handleTabChange", index);
   startTransition(() => {
     setTabIndex(index);
     switch (index) {
@@ -81,7 +80,7 @@ export default function Bookmarks({
         bookmarkGroups
       );
     });
-  }, [bookmarkedMovies]);
+  }, [tabIndex, bookmarkGroups, bookmarkedMovies]);
 
   return (
     <Container maxW={"container.xl"}>
