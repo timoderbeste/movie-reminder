@@ -38,8 +38,6 @@ export default function MovieGrid({
   bookmarkedMovies,
   setBookmarkedMovies,
   forBookmarks = false,
-  watchedMovies,
-  setWatchedMovies,
   onSetBookmarkedMovies,
 }: MovieGridProps) {
   return (
@@ -71,10 +69,6 @@ type MovieCardProps = {
     React.SetStateAction<Movie[]>
   >;
   forBookmarks: boolean;
-  watchedMovies?: Movie[];
-  setWatchedMovies?: React.Dispatch<
-    React.SetStateAction<Movie[]>
-  >;
   onSetBookmarkedMovies?: Function;
 };
 

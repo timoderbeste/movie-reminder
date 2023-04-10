@@ -64,10 +64,7 @@ export default function Bookmarks({
   console.log("bookmarkedMovies", bookmarkedMovies);
 
   return (
-    <Container
-      maxW={"container.xl"}
-      py={10}
-    >
+    <Container maxW={"container.xl"}>
       {bookmarkedMovies.length === 0 ? (
         isPending ? null : (
           <Alert>

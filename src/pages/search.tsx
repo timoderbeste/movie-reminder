@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   Box,
   Button,
+  Card,
   Container,
   Flex,
   Input,
@@ -63,6 +64,11 @@ export default function Search({
         setIsLoading(false);
       });
   }
+  function handleCancel() {
+    setSearchText("");
+    setMovies([]);
+  }
+
   return (
     <Container
       maxW={"container.xl"}
@@ -87,41 +93,43 @@ export default function Search({
           />
         </InputGroup>
         <Button
-          onClick={handleSearch}
+          onClick={
+            movies.length > 0 ? handleCancel : handleSearch
+          }
           mr={5}
         >
-          Search
-        </Button>
-        <Button
-          onClick={() => {
-            setSearchText("");
-            setMovies([]);
-          }}
-        >
-          Clear
+          {movies.length > 0 ? "Cancel" : "Search"}
         </Button>
       </Flex>
-      <Box
-        zIndex={100}
-        position={"absolute"}
-        width={"100%"}
-      >
-        {error && (
-          <Text color={"red"}>{error.message}</Text>
-        )}
-        {isLoading && <Text>Loading...</Text>}
-        {movies && (
-          <MovieGrid
-            movies={movies}
-            bookmarkedMovies={bookmarkedMovies}
-            setBookmarkedMovies={setBookmarkedMovies}
-            onSetBookmarkedMovies={() => {
-              setMovies([]);
-              setSearchText("");
-            }}
-          />
-        )}
-      </Box>
+      {movies.length > 0 && (
+        <Card
+          zIndex={100}
+          position={"absolute"}
+          width={"100%"}
+          height={500}
+          overflow={"auto"}
+          variant={"outline"}
+          px={5}
+          py={5}
+          mt={5}
+        >
+          {error && (
+            <Text color={"red"}>{error.message}</Text>
+          )}
+          {isLoading && <Text>Loading...</Text>}
+          {movies && (
+            <MovieGrid
+              movies={movies}
+              bookmarkedMovies={bookmarkedMovies}
+              setBookmarkedMovies={setBookmarkedMovies}
+              onSetBookmarkedMovies={() => {
+                setMovies([]);
+                setSearchText("");
+              }}
+            />
+          )}
+        </Card>
+      )}
     </Container>
   );
 }
