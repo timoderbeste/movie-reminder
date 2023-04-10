@@ -71,7 +71,7 @@ export default function Bookmarks({
 
   useEffect(() => {
     startTransition(() => {
-      setMovies(bookmarkedMovies);
+      handleTabChange(tabIndex);
     });
   }, [bookmarkedMovies]);
 
