@@ -1,4 +1,4 @@
-import { Heading } from "@chakra-ui/react";
+import { Container, Heading } from "@chakra-ui/react";
 import MovieGrid from "./movieGrid";
 
 type Movie = {
@@ -21,12 +21,17 @@ export default function Bookmarks({
   setBookmarkedMovies,
 }: BookmarksProps): JSX.Element {
   return (
-    bookmarkedMovies && (
-      <MovieGrid
-        movies={bookmarkedMovies}
-        bookmarkedMovies={bookmarkedMovies}
-        setBookmarkedMovies={setBookmarkedMovies}
-      />
-    )
+    <Container
+      maxW={"container.xl"}
+      py={10}
+    >
+      {bookmarkedMovies && (
+        <MovieGrid
+          movies={bookmarkedMovies}
+          bookmarkedMovies={bookmarkedMovies}
+          setBookmarkedMovies={setBookmarkedMovies}
+        />
+      )}
+    </Container>
   );
 }

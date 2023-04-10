@@ -8,6 +8,7 @@ import {
   CardFooter,
   Container,
   Divider,
+  Flex,
   Heading,
   Icon,
   IconButton,
@@ -78,28 +79,52 @@ export default function Search({
     <Container
       maxW={"container.xl"}
       py={10}
+      position={"relative"}
     >
-      <InputGroup mb={4}>
-        <InputLeftElement pointerEvents="none">
-          <SearchIcon color="gray.300" />
-        </InputLeftElement>
-        <Input
-          type="text"
-          placeholder="Search for a movie"
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-        />
-      </InputGroup>
-      <Button onClick={handleSearch}>Search</Button>
-      {error && <Text color={"red"}>{error.message}</Text>}
-      {isLoading && <Text>Loading...</Text>}
-      {movies && (
-        <MovieGrid
-          movies={movies}
-          bookmarkedMovies={bookmarkedMovies}
-          setBookmarkedMovies={setBookmarkedMovies}
-        />
-      )}
+      <Flex>
+        <InputGroup mr={5}>
+          <InputLeftElement pointerEvents="none">
+            <SearchIcon color="gray.300" />
+          </InputLeftElement>
+          <Input
+            type="text"
+            placeholder="Search for a movie"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </InputGroup>
+        <Button
+          onClick={handleSearch}
+          mr={5}
+        >
+          Search
+        </Button>
+        <Button
+          onClick={() => {
+            setSearchText("");
+            setMovies([]);
+          }}
+        >
+          Clear
+        </Button>
+      </Flex>
+      <Box
+        zIndex={100}
+        position={"absolute"}
+        width={"100%"}
+      >
+        {error && (
+          <Text color={"red"}>{error.message}</Text>
+        )}
+        {isLoading && <Text>Loading...</Text>}
+        {movies && (
+          <MovieGrid
+            movies={movies}
+            bookmarkedMovies={bookmarkedMovies}
+            setBookmarkedMovies={setBookmarkedMovies}
+          />
+        )}
+      </Box>
     </Container>
   );
 }
