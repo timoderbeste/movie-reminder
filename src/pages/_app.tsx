@@ -8,15 +8,7 @@ import { Container, Flex, Heading } from "@chakra-ui/react";
 import Search from "./search";
 import Bookmarks from "./bookmarks";
 import { useEffect, useState } from "react";
-import { AppProps } from "next/app";
-
-type Movie = {
-  Title: string;
-  Year: string;
-  Poster: string;
-  imdbID: string;
-  Type: string;
-};
+import { Movie } from "@/types";
 
 export default function App() {
   const [bookmarkedMovies, setBookmarkedMovies] = useState<

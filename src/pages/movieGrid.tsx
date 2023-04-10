@@ -1,3 +1,4 @@
+import { Movie } from "@/types";
 import {
   Box,
   Card,
@@ -21,14 +22,6 @@ import {
   ImCheckboxChecked,
   ImCheckboxUnchecked,
 } from "react-icons/im";
-
-type Movie = {
-  Title: string;
-  Year: string;
-  Poster: string;
-  imdbID: string;
-  Type: string;
-};
 
 type MovieGridProps = {
   movies: Movie[];

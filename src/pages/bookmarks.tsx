@@ -8,14 +8,7 @@ import {
 } from "@chakra-ui/react";
 import MovieGrid from "./movieGrid";
 import { useEffect, useState, useTransition } from "react";
-
-type Movie = {
-  Title: string;
-  Year: string;
-  Poster: string;
-  imdbID: string;
-  Type: string;
-};
+import { Movie } from "@/types";
 
 type BookmarksProps = {
   bookmarkedMovies: Movie[];

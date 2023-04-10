@@ -13,14 +13,7 @@ import {
 import { SearchIcon } from "@chakra-ui/icons";
 
 import MovieGrid from "./movieGrid";
-
-type Movie = {
-  Title: string;
-  Year: string;
-  Poster: string;
-  imdbID: string;
-  Type: string;
-};
+import { Movie } from "@/types";
 
 type SearchProps = {
   bookmarkedMovies: Movie[];
