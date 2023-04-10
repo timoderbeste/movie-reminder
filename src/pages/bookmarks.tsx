@@ -1,5 +1,6 @@
 import { Container, Heading } from "@chakra-ui/react";
 import MovieGrid from "./movieGrid";
+import { useEffect, useState } from "react";
 
 type Movie = {
   Title: string;
@@ -20,6 +21,20 @@ export default function Bookmarks({
   bookmarkedMovies,
   setBookmarkedMovies,
 }: BookmarksProps): JSX.Element {
+  const [watchedMovies, setWatchedMovies] = useState<
+    Movie[]
+  >([]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    const localData = localStorage.getItem("watchedMovies");
+    setWatchedMovies(
+      localData ? JSON.parse(localData) : []
+    );
+  }, []);
+
   return (
     <Container
       maxW={"container.xl"}
@@ -30,6 +45,9 @@ export default function Bookmarks({
           movies={bookmarkedMovies}
           bookmarkedMovies={bookmarkedMovies}
           setBookmarkedMovies={setBookmarkedMovies}
+          forBookmarks={true}
+          watchedMovies={watchedMovies}
+          setWatchedMovies={setWatchedMovies}
         />
       )}
     </Container>
