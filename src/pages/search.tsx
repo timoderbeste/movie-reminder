@@ -2,25 +2,27 @@ import { useEffect, useState } from "react";
 import {
   Box,
   Button,
+  ButtonGroup,
   Card,
   CardBody,
-  Center,
+  CardFooter,
   Container,
-  Flex,
-  Grid,
+  Divider,
   Heading,
+  Icon,
+  IconButton,
   Image,
   Input,
   InputGroup,
   InputLeftElement,
-  List,
-  ListItem,
   SimpleGrid,
   Stack,
   Text,
 } from "@chakra-ui/react";
 
 import { SearchIcon } from "@chakra-ui/icons";
+
+import { BsBookmarkDash, BsBookmarkPlus } from "react-icons/bs";
 
 type Movie = {
   Title: string,
@@ -108,6 +110,21 @@ export default function Search() {
                       </Stack>
                     </Box>
                   </CardBody>
+                  <Divider />
+                  <CardFooter>
+                    <ButtonGroup>
+                      <IconButton 
+                        colorScheme="blue"
+                        aria-label="Add to bookmarks"
+                        icon={<Icon as={BsBookmarkPlus} />} 
+                      />
+                      <IconButton 
+                        colorScheme="red"
+                        aria-label="Remove from bookmarks"
+                        icon={<Icon as={BsBookmarkDash}/>} 
+                      />
+                    </ButtonGroup>
+                  </CardFooter>
                 </Card>
               </Box>
             ))}
