@@ -24,7 +24,7 @@ import {
   ImCheckboxChecked,
   ImCheckboxUnchecked,
 } from "react-icons/im";
-import BookmarkCreationModal from "./bookmarkCreation";
+import BookmarkCreationModal from "./BookmarkCreationModal";
 import { useEffect } from "react";
 
 type MovieGridProps = {

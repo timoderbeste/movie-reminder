@@ -1,8 +1,8 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import Link from "next/link";
 import { Container, Flex, Heading } from "@chakra-ui/react";
-import Search from "../components/search";
-import Bookmarks from "../components/bookmarks";
+import Search from "../components/Search";
+import Bookmarks from "../components/Bookmarks";
 import { useEffect, useState } from "react";
 import { Movie } from "@/types";
 
