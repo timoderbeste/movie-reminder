@@ -79,6 +79,11 @@ export default function Search({
             placeholder="Search for a movie"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch();
+              }
+            }}
           />
         </InputGroup>
         <Button
