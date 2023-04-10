@@ -6,9 +6,10 @@ It has the following features:
 
 1. Search for movies by title.
 2. Bookmark a movie you like or remove one from your bookmark list.
-3. View bookmarked movies in a tab view: all, unwatched and watched bookmarked movies.
-4. Mark a bookmarked movie as watched/unwatched.
-5. Bookmarked movies are cached locally using `localStorage`.
+3. Create or choose a bookmark group for your bookmarks for easy bookmark navigation.
+4. View bookmarked movies in a tab view: all, unwatched, watched bookmarked movies as well as those for your custom bookmark groups.
+5. Mark a bookmarked movie as watched/unwatched.
+6. Bookmarked movies are cached locally using `localStorage`.
 
 ## Getting Started for Dev
 
