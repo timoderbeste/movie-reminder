@@ -9,8 +9,8 @@ export default function App({ Component, pageProps }: AppProps) {
       <Container maxW={"container.xl"} py={10}>
         <Flex alignItems={"center"}>
           <Link href="/">
-            <Heading>
-              <Link href="/">Movie Reminder</Link>
+            <Heading size={"sm"} cursor={"pointer"}>
+              Movie Reminder
             </Heading>
           </Link>
           <Spacer />
