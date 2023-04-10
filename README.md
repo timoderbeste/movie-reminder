@@ -1,6 +1,8 @@
 # Movie Reminder
 
-Movie Reminder is a simple app that allows you to search for a movie and bookmark it watch it later. It has the following features:
+Movie Reminder is a simple app that allows you to search for a movie and bookmark it watch it later.
+You can access the app deployed on vercel [here]().
+It has the following features:
 
 1. Search for movies by title.
 2. Bookmark a movie you like or remove one from your bookmark list.
@@ -8,7 +10,7 @@ Movie Reminder is a simple app that allows you to search for a movie and bookmar
 4. Mark a bookmarked movie as watched/unwatched.
 5. Bookmarked movies are cached locally using `localStorage`.
 
-## Getting Started
+## Getting Started for Dev
 
 First, run the development server:
 

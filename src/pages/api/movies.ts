@@ -11,7 +11,7 @@ export default async function handler(
     {
       method: "GET",
       headers: {
-        "X-RapidAPI-Key": process.env.RAPID_API_KEY,
+        "X-RapidAPI-Key": process.env.RAPID_API_KEY ?? "",
         "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
       },
     }
