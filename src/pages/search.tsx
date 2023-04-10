@@ -8,6 +8,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Spinner,
   Text,
 } from "@chakra-ui/react";
 
@@ -86,17 +87,35 @@ export default function Search({
           <InputLeftElement pointerEvents="none">
             <SearchIcon color="gray.300" />
           </InputLeftElement>
-          <Input
-            type="text"
-            placeholder="Search for a movie"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleSearch();
+          <Flex
+            position={"relative"}
+            width={"100%"}
+          >
+            <Input
+              type="text"
+              placeholder="Search for a movie"
+              value={searchText}
+              onChange={(e) =>
+                setSearchText(e.target.value)
               }
-            }}
-          />
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch();
+                }
+              }}
+              disabled={isLoading}
+              pr={isLoading ? 35 : 0}
+              pl={10}
+            />
+            {isLoading && (
+              <Spinner
+                size={"sm"}
+                position={"absolute"}
+                top={"30%"}
+                right={5}
+              />
+            )}
+          </Flex>
         </InputGroup>
         <Button
           onClick={
@@ -107,7 +126,7 @@ export default function Search({
           {movies.length > 0 ? "Cancel" : "Search"}
         </Button>
       </Flex>
-      {movies.length > 0 && (
+      {movies.length > 0 && !isLoading && (
         <Card
           zIndex={100}
           position={"absolute"}
@@ -122,7 +141,6 @@ export default function Search({
           {error && (
             <Text color={"red"}>{error.message}</Text>
           )}
-          {isLoading && <Text>Loading...</Text>}
           {movies && (
             <MovieGrid
               movies={movies}
