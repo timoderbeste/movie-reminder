@@ -10,7 +10,6 @@ import {
   Icon,
   IconButton,
   Image,
-  SimpleGrid,
   Stack,
   Text,
   Tooltip,
@@ -24,55 +23,7 @@ import {
   ImCheckboxChecked,
   ImCheckboxUnchecked,
 } from "react-icons/im";
-import BookmarkCreationModal from "./BookmarkCreationModal";
-import { useEffect } from "react";
-
-type MovieGridProps = {
-  movies: Movie[];
-  bookmarkedMovies: Movie[];
-  setBookmarkedMovies: React.Dispatch<
-    React.SetStateAction<Movie[]>
-  >;
-  forBookmarks?: boolean;
-  onSetBookmarkedMovies?: Function;
-  bookmarkGroups?: string[];
-  setBookmarkGroups?: React.Dispatch<
-    React.SetStateAction<string[]>
-  >;
-};
-
-export default function MovieGrid({
-  movies,
-  bookmarkedMovies,
-  setBookmarkedMovies,
-  forBookmarks = false,
-  onSetBookmarkedMovies,
-  bookmarkGroups,
-  setBookmarkGroups,
-}: MovieGridProps) {
-  return (
-    <SimpleGrid
-      spacing={4}
-      templateColumns={
-        "repeat(auto-fill, minmax(200px, 1fr))"
-      }
-    >
-      {movies.map((movie) => (
-        <Box key={movie.imdbID}>
-          <MovieCard
-            movie={movie}
-            bookmarkedMovies={bookmarkedMovies}
-            setBookmarkedMovies={setBookmarkedMovies}
-            forBookmarks={forBookmarks}
-            onSetBookmarkedMovies={onSetBookmarkedMovies}
-            bookmarkGroups={bookmarkGroups}
-            setBookmarkGroups={setBookmarkGroups}
-          />
-        </Box>
-      ))}
-    </SimpleGrid>
-  );
-}
+import BookmarkCreationModal from "../BookmarkCreationModal";
 
 type MovieCardProps = {
   movie: Movie;
@@ -87,8 +38,7 @@ type MovieCardProps = {
     React.SetStateAction<string[]>
   >;
 };
-
-function MovieCard({
+export function MovieCard({
   movie,
   bookmarkedMovies,
   setBookmarkedMovies,
@@ -168,7 +118,7 @@ function MovieCard({
             {forBookmarks &&
               (movie.watched ? (
                 <IconButton
-                  colorScheme="green"
+                  colorScheme="blue"
                   aria-label="Mark as unwatched"
                   icon={<Icon as={ImCheckboxChecked} />}
                   onClick={() => {
@@ -187,7 +137,7 @@ function MovieCard({
                 />
               ) : (
                 <IconButton
-                  colorScheme="green"
+                  colorScheme="blue"
                   aria-label="Mark as watched"
                   icon={<Icon as={ImCheckboxUnchecked} />}
                   onClick={() => {
