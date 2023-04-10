@@ -1,13 +1,22 @@
 import { useEffect, useState } from "react";
 import {
+  Box,
   Button,
+  Card,
+  CardBody,
+  Center,
   Container,
+  Flex,
+  Grid,
   Heading,
+  Image,
   Input,
   InputGroup,
   InputLeftElement,
   List,
   ListItem,
+  SimpleGrid,
+  Stack,
   Text,
 } from "@chakra-ui/react";
 
@@ -32,6 +41,7 @@ export default function Search() {
       return;
     }
     setIsLoading(true);
+    setMovies([]);
     fetch(`/api/movies?title=${searchText}`)
       .then((res) => res.json())
       .then((data) => {
@@ -65,14 +75,43 @@ export default function Search() {
       <Button onClick={handleSearch}>Search</Button>
       {error && <Text color={"red"}>{error.message}</Text>}
       {
+        isLoading && (
+          <Text>Loading...</Text>
+        )
+      }
+      {
         movies && (
-          <List>
+          <SimpleGrid 
+            spacing={4} 
+            templateColumns={"repeat(auto-fill, minmax(200px, 1fr))"}
+          >
             {movies.map((movie) => (
-              <ListItem key={movie.imdbID}>
-                <Text>{movie.Title} ({movie.Year})</Text>
-              </ListItem>
+              <Box key={movie.imdbID}>
+                <Card maxW={"sm"}>
+                  <CardBody>
+                    <Box 
+                      display={"flex"} 
+                      height={350} 
+                      flexDirection={"column"} 
+                      justifyContent={"space-between"} 
+                      alignContent={"center"} 
+                      // alignItems={"center"}
+                    >
+                      <Image 
+                        src={movie.Poster} 
+                        alt={movie.Title}
+                        height={250}
+                      />
+                      <Stack mt={4}>
+                        <Heading size={"md"}>{movie.Title}</Heading>
+                        <Text>{movie.Year}</Text>
+                      </Stack>
+                    </Box>
+                  </CardBody>
+                </Card>
+              </Box>
             ))}
-          </List>
+          </SimpleGrid>
         )
       }
     </Container>

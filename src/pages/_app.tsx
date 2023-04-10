@@ -1,10 +1,20 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import { AppProps } from "next/app";
 import Link from "next/link";
-import { Container, Flex, Heading, Spacer, Stack } from "@chakra-ui/react";
+import { Container, Flex, Heading } from "@chakra-ui/react";
 import Search from "./search";
+import Bookmarks from "./bookmarks";
+import { useState } from "react";
 
-export default function App({ Component, pageProps }: AppProps) {
+type Movie = {
+  Title: string,
+  Year: string,
+  Poster: string,
+  imdbID: string,
+  Type: string,
+};
+
+export default function App() {
+  const [bookmarkedMovies, setBookmarkedMovies] = useState<Movie[]>([]);
   return (
     <ChakraProvider>
       <Container maxW={"container.xl"} py={10}>
@@ -15,7 +25,8 @@ export default function App({ Component, pageProps }: AppProps) {
             </Heading>
           </Link>
         </Flex>
-        {Component === Search && <Search />}
+        <Search />
+        <Bookmarks />
       </Container>
     </ChakraProvider>
   );
