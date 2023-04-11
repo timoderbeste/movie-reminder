@@ -55,7 +55,7 @@ export default function App() {
       >
         <Flex
           justifyContent={"space-between"}
-          alignItems={"center"}
+          alignItems={"flex-end"}
         >
           <Link href="/">
             <Heading
