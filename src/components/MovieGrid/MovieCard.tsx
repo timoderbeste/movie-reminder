@@ -64,6 +64,7 @@ export function MovieCard({
               src={movie.poster}
               alt={movie.title}
               height={250}
+              objectFit={"cover"}
             />
             <Stack mt={4}>
               <Tooltip label={movie.title}>
