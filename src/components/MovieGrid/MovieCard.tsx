@@ -10,6 +10,9 @@ import {
   Icon,
   IconButton,
   Image,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
   Stack,
   Text,
   Tooltip,
@@ -60,22 +63,23 @@ export function MovieCard({
             justifyContent={"space-between"}
             alignContent={"center"}
           >
-            <Tooltip
-              label={
+            <Popover>
+              <PopoverTrigger>
+                <Image
+                  src={movie.poster}
+                  alt={movie.title}
+                  height={250}
+                  objectFit={"cover"}
+                  fallbackSrc="https://via.placeholder.com/350"
+                />
+              </PopoverTrigger>
+              <PopoverContent>
                 <Image
                   src={movie.poster}
                   fallbackSrc="https://via.placeholder.com/350"
                 />
-              }
-            >
-              <Image
-                src={movie.poster}
-                alt={movie.title}
-                height={250}
-                objectFit={"cover"}
-                fallbackSrc="https://via.placeholder.com/350"
-              />
-            </Tooltip>
+              </PopoverContent>
+            </Popover>
             <Stack mt={4}>
               <Tooltip label={movie.title}>
                 <Heading
