@@ -60,7 +60,14 @@ export function MovieCard({
             justifyContent={"space-between"}
             alignContent={"center"}
           >
-            <Tooltip label={<Image src={movie.poster} />}>
+            <Tooltip
+              label={
+                <Image
+                  src={movie.poster}
+                  fallbackSrc="https://via.placeholder.com/350"
+                />
+              }
+            >
               <Image
                 src={movie.poster}
                 alt={movie.title}
