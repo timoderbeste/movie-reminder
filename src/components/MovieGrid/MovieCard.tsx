@@ -60,12 +60,14 @@ export function MovieCard({
             justifyContent={"space-between"}
             alignContent={"center"}
           >
-            <Image
-              src={movie.poster}
-              alt={movie.title}
-              height={250}
-              objectFit={"cover"}
-            />
+            <Tooltip label={<Image src={movie.poster} />}>
+              <Image
+                src={movie.poster}
+                alt={movie.title}
+                height={250}
+                objectFit={"cover"}
+              />
+            </Tooltip>
             <Stack mt={4}>
               <Tooltip label={movie.title}>
                 <Heading
