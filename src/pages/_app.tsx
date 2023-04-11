@@ -1,19 +1,15 @@
 import { ChakraProvider, Stack } from "@chakra-ui/react";
 import Link from "next/link";
 import { Container, Flex, Heading } from "@chakra-ui/react";
-import Search from "../components/Search";
-import Bookmarks from "../components/Bookmarks";
 import { useEffect, useState } from "react";
 import { Movie } from "@/types";
-import { AppProps } from "next/app";
 import SearchPage from "./search";
 import BookmarksPage from "./bookmarks";
 import { useRouter } from "next/router";
 
-export default function App({
-  Component,
-  pageProps,
-}: AppProps) {
+import "@/styles/global.css";
+
+export default function App() {
   const [bookmarkedMovies, setBookmarkedMovies] = useState<
     Movie[]
   >([]);
@@ -77,6 +73,9 @@ export default function App({
               <Heading
                 size={"md"}
                 cursor={"pointer"}
+                className={
+                  isSearchRoute ? "active-link" : ""
+                }
               >
                 Search
               </Heading>
@@ -85,6 +84,9 @@ export default function App({
               <Heading
                 size={"md"}
                 cursor={"pointer"}
+                className={
+                  isBookmarksRoute ? "active-link" : ""
+                }
               >
                 Bookmarks
               </Heading>
