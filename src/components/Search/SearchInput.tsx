@@ -65,7 +65,6 @@ export function SearchInput({
         onClick={
           movies.length > 0 ? handleCancel : handleSearch
         }
-        mr={5}
       >
         {movies.length > 0 ? "Cancel" : "Search"}
       </Button>
