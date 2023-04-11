@@ -1,6 +1,9 @@
 # Movie Reminder
 
 Movie Reminder is a simple app that allows you to search for a movie and bookmark it watch it later.
+
+## Demo Link
+
 You can access the app deployed on vercel [here](https://movie-reminder.vercel.app).
 
 ## Current Features
