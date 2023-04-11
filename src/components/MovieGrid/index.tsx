@@ -9,7 +9,6 @@ type MovieGridProps = {
     React.SetStateAction<Movie[]>
   >;
   forBookmarks?: boolean;
-  onSetBookmarkedMovies?: Function;
   bookmarkGroups?: string[];
   setBookmarkGroups?: React.Dispatch<
     React.SetStateAction<string[]>
@@ -21,7 +20,6 @@ export default function MovieGrid({
   bookmarkedMovies,
   setBookmarkedMovies,
   forBookmarks = false,
-  onSetBookmarkedMovies,
   bookmarkGroups,
   setBookmarkGroups,
 }: MovieGridProps) {
@@ -39,7 +37,6 @@ export default function MovieGrid({
             bookmarkedMovies={bookmarkedMovies}
             setBookmarkedMovies={setBookmarkedMovies}
             forBookmarks={forBookmarks}
-            onSetBookmarkedMovies={onSetBookmarkedMovies}
             bookmarkGroups={bookmarkGroups}
             setBookmarkGroups={setBookmarkGroups}
           />

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container } from "@chakra-ui/react";
+import { Box, Container } from "@chakra-ui/react";
 
 import { Movie } from "@/types";
 import { SearchInput } from "./SearchInput";
@@ -29,10 +29,9 @@ export default function Search({
   const [error, setError] = useState<Error | null>(null);
 
   return (
-    <Container
+    <Box
       maxW={"container.xl"}
       py={10}
-      position={"relative"}
     >
       <SearchInput
         searchText={searchText}
@@ -51,18 +50,16 @@ export default function Search({
           handleCancel(setSearchText, setMovies)
         }
       />
-      {movies.length > 0 && !isLoading && (
-        <SearchResults
-          error={error}
-          movies={movies}
-          bookmarkedMovies={bookmarkedMovies}
-          setBookmarkedMovies={setBookmarkedMovies}
-          setMovies={setMovies}
-          setSearchText={setSearchText}
-          bookmarkGroups={bookmarkGroups}
-          setBookmarkGroups={setBookmarkGroups}
-        />
-      )}
-    </Container>
+      <SearchResults
+        error={error}
+        movies={movies}
+        bookmarkedMovies={bookmarkedMovies}
+        setBookmarkedMovies={setBookmarkedMovies}
+        setMovies={setMovies}
+        setSearchText={setSearchText}
+        bookmarkGroups={bookmarkGroups}
+        setBookmarkGroups={setBookmarkGroups}
+      />
+    </Box>
   );
 }

@@ -32,7 +32,6 @@ type MovieCardProps = {
     React.SetStateAction<Movie[]>
   >;
   forBookmarks: boolean;
-  onSetBookmarkedMovies?: Function;
   bookmarkGroups?: string[];
   setBookmarkGroups?: React.Dispatch<
     React.SetStateAction<string[]>
@@ -43,7 +42,6 @@ export function MovieCard({
   bookmarkedMovies,
   setBookmarkedMovies,
   forBookmarks = false,
-  onSetBookmarkedMovies,
   bookmarkGroups,
   setBookmarkGroups,
 }: MovieCardProps): JSX.Element {
@@ -158,20 +156,17 @@ export function MovieCard({
           </Flex>
         </CardFooter>
       </Card>
-      {bookmarkGroups !== null &&
-        setBookmarkGroups &&
-        onSetBookmarkedMovies && (
-          <BookmarkCreationModal
-            isOpen={isOpen}
-            onClose={onClose}
-            movie={movie}
-            bookmarkedMovies={bookmarkedMovies}
-            setBookmarkedMovies={setBookmarkedMovies}
-            onSetBookmarkedMovies={onSetBookmarkedMovies}
-            bookmarkGroups={bookmarkGroups ?? []}
-            setBookmarkGroups={setBookmarkGroups ?? null}
-          />
-        )}
+      {bookmarkGroups !== null && setBookmarkGroups && (
+        <BookmarkCreationModal
+          isOpen={isOpen}
+          onClose={onClose}
+          movie={movie}
+          bookmarkedMovies={bookmarkedMovies}
+          setBookmarkedMovies={setBookmarkedMovies}
+          bookmarkGroups={bookmarkGroups ?? []}
+          setBookmarkGroups={setBookmarkGroups ?? null}
+        />
+      )}
     </>
   );
 }

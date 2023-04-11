@@ -16,6 +16,7 @@ export function handleSearch(
     .then((data) => {
       if (data.error) {
         setError(new Error(data.error));
+        setMovies([]);
       } else {
         setError(null);
         setMovies(

@@ -1,6 +1,7 @@
 import {
   Alert,
   AlertIcon,
+  Box,
   Container,
   Tab,
   TabList,
@@ -83,7 +84,7 @@ export default function Bookmarks({
   }, [tabIndex, bookmarkGroups, bookmarkedMovies]);
 
   return (
-    <Container maxW={"container.xl"}>
+    <Box maxW={"container.xl"}>
       {bookmarkedMovies.length === 0 ? (
         isPending ? null : (
           <Alert>
@@ -126,6 +127,6 @@ export default function Bookmarks({
           />
         </Tabs>
       )}
-    </Container>
+    </Box>
   );
 }

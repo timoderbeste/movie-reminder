@@ -21,7 +21,6 @@ type BookmarkCreationProps = {
   setBookmarkedMovies: React.Dispatch<
     React.SetStateAction<Movie[]>
   >;
-  onSetBookmarkedMovies?: Function;
   bookmarkGroups: string[];
   setBookmarkGroups: React.Dispatch<
     React.SetStateAction<string[]>
@@ -39,7 +38,6 @@ export default function BookmarkCreationModal({
   movie,
   bookmarkedMovies,
   setBookmarkedMovies,
-  onSetBookmarkedMovies,
   bookmarkGroups,
   setBookmarkGroups,
 }: BookmarkCreationProps): JSX.Element {
@@ -115,10 +113,6 @@ export default function BookmarkCreationModal({
                   "bookmarkGroups",
                   JSON.stringify(newBookmarkGroups)
                 );
-              }
-
-              if (onSetBookmarkedMovies) {
-                onSetBookmarkedMovies();
               }
               onClose();
             }}

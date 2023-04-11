@@ -1,4 +1,4 @@
-import { Card, Text } from "@chakra-ui/react";
+import { Box, Card, Text } from "@chakra-ui/react";
 import MovieGrid from "../MovieGrid";
 import { Movie } from "@/types";
 
@@ -29,31 +29,26 @@ export function SearchResults({
   setBookmarkGroups,
 }: SearchResultsProps): JSX.Element {
   return (
-    <Card
-      zIndex={100}
-      position={"absolute"}
-      width={"100%"}
-      height={500}
-      overflow={"auto"}
-      px={5}
-      py={5}
-      mt={5}
-      variant={"filled"}
-    >
-      {error && <Text color={"red"}>{error.message}</Text>}
-      {movies && (
-        <MovieGrid
-          movies={movies}
-          bookmarkedMovies={bookmarkedMovies}
-          setBookmarkedMovies={setBookmarkedMovies}
-          onSetBookmarkedMovies={() => {
-            setMovies([]);
-            setSearchText("");
-          }}
-          bookmarkGroups={bookmarkGroups}
-          setBookmarkGroups={setBookmarkGroups}
-        />
-      )}
-    </Card>
+    ((movies.length > 1 || error) && (
+      <Box
+        width={"100%"}
+        px={5}
+        py={5}
+        mt={5}
+      >
+        {error && (
+          <Text color={"red"}>{error.message}</Text>
+        )}
+        {movies && (
+          <MovieGrid
+            movies={movies}
+            bookmarkedMovies={bookmarkedMovies}
+            setBookmarkedMovies={setBookmarkedMovies}
+            bookmarkGroups={bookmarkGroups}
+            setBookmarkGroups={setBookmarkGroups}
+          />
+        )}
+      </Box>
+    )) || <></>
   );
 }

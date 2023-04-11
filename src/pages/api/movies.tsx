@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,15 +11,15 @@ export default async function handler(
       method: "GET",
       headers: {
         "X-RapidAPI-Key": process.env.RAPID_API_KEY ?? "",
-        "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
+        "X-RapidAPI-Host":
+          "movie-database-alternative.p.rapidapi.com",
       },
     }
   );
   const data = await response.json();
   if (data.Response === "False") {
     res.status(404).json({ error: data.Error });
-  }
-  else {
+  } else {
     res.status(200).json(data.Search);
   }
 }
