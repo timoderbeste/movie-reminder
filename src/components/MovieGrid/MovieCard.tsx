@@ -66,6 +66,7 @@ export function MovieCard({
                 alt={movie.title}
                 height={250}
                 objectFit={"cover"}
+                fallbackSrc="https://via.placeholder.com/350"
               />
             </Tooltip>
             <Stack mt={4}>
